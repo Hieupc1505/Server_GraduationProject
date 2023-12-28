@@ -1,0 +1,45 @@
+
+@baseUrl = http://localhost:8080
+@authRoute = /api/v1/auth
+
+
+###
+POST {{baseUrl}}{{authRoute}}/login
+Content-Type: application/json
+
+{
+    "email" : "bacphihl12@gmail.com",
+    "password" : "A123456xyZ"
+}
+
+###
+POST {{baseUrl}}{{authRoute}}/register
+Content-Type: application/json
+
+{
+    "email" : "fadewalker444@gmail.com",
+    "password" : "A123456xyZ"
+}
+
+###
+GET {{baseUrl}}{{authRoute}}/activate/eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NGU5YjA5ZDJiMGMzMGE1ODEwNGU1ODEiLCJpYXQiOjE2OTMwMzY3NzUsImV4cCI6MTY5MzkzNjc3NX0.-6i2_4AtZg0J1iCn3FmyIQyDu7sHkX2gTgOK7jsuKBU
+
+###
+GET {{baseUrl}}{{authRoute}}/logout
+
+###
+GET {{baseUrl}}{{authRoute}}/info
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NGU5YjA5ZDJiMGMzMGE1ODEwNGU1ODEiLCJpYXQiOjE2OTMxMDQ2MzEsImV4cCI6MTY5NDAwNDYzMX0.njdKP7peWYxG44SoSyFZ8ZbWClLVqYHDHKVUpVGc0X0
+
+###
+GET {{baseUrl}}{{authRoute}}/liked
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NGU5YjA5ZDJiMGMzMGE1ODEwNGU1ODEiLCJpYXQiOjE3MDI2MjE2NjcsImV4cCI6MTcwMzUyMTY2N30.1m_xFAJhZPCW-3e5DctH0tzTIp2vxNaTAdBGd6DYDm0
+
+###
+POST {{baseUrl}}{{authRoute}}/liked/add
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NGU5YjA5ZDJiMGMzMGE1ODEwNGU1ODEiLCJpYXQiOjE3MDI2MjE2NjcsImV4cCI6MTcwMzUyMTY2N30.1m_xFAJhZPCW-3e5DctH0tzTIp2vxNaTAdBGd6DYDm0
+
+{
+    "productId" : "64f290e6e30792fe4c98944d"
+}

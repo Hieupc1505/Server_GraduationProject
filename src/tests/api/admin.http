@@ -1,0 +1,38 @@
+
+@baseUrl = http://localhost:8080
+@adRoute = /api/v1/admin
+
+###
+GET {{baseUrl}}{{adRoute}}/administrators
+###
+POST {{baseUrl}}{{adRoute}}/administrators/filter
+Content-Type: application/json
+
+{
+    "email" : "vuhieukenny2@gmail.com"
+}
+###
+POST {{baseUrl}}{{adRoute}}/customers/filter
+Content-Type: application/json
+
+{
+    "email" : "hoanghieuss3344@gmail.com"
+}
+
+###
+GET {{baseUrl}}{{adRoute}}/customers
+###
+GET {{baseUrl}}{{adRoute}}/categories
+###
+POST  {{baseUrl}}{{adRoute}}/categories
+Content-Type: application/json
+
+{
+    "category": "dress"
+}
+###
+GET {{baseUrl}}{{adRoute}}/products
+###
+GET {{baseUrl}}{{adRoute}}/orders?id=64f97d6ed1cf12b1ec23fe9b
+###
+GET {{baseUrl}}{{adRoute}}/orders/filter?id=64f97d6ed1cf12b1ec23fe9b

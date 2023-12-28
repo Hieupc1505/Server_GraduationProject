@@ -1,0 +1,45 @@
+
+
+@baseUrl = http://localhost:8080
+@orderRoute = /api/v1/order
+
+###
+{{baseUrl}}{{orderRoute}}/add
+Content-Type: application/json
+
+{
+
+}
+
+
+###
+POST {{baseUrl}}{{orderRoute}}/add
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NGU5YjA5ZDJiMGMzMGE1ODEwNGU1ODEiLCJpYXQiOjE2OTQwNzYxMTcsImV4cCI6MTY5NDk3NjExN30.KSpYiN969H__EugeVDfFIQUqi-go31IpaK9jjspxuRA
+Content-Type: application/json
+
+{
+     "address": "số 17, 193/120/119 Phú Diễn Bắc Từ Liêm Hà Nội",
+     "number": "0985752641",
+     "cost": 40000,
+     "notes": "bỏ hàng",
+     "type": 0,
+     "total": 25000,
+     "products": "[{\"productId\":\"64f290e6e30792fe4c98944d\",\"quantity\":10}]"
+}
+
+###
+//products --> base 64 [{productId, amount, quantity}]
+POST {{baseUrl}}{{orderRoute}}/banking
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NGU5YjA5ZDJiMGMzMGE1ODEwNGU1ODEiLCJpYXQiOjE2OTQxNTg0OTIsImV4cCI6MTY5NTA1ODQ5Mn0.ucssas3pskmSNoF1CY7RwYNHffEM0RL2Cvir8lOmBCE
+Accept-Language: vn
+
+{
+     "address": "số 17, 193/120/119 Phú Diễn Bắc Từ Liêm Hà Nội",
+     "number": "0985752641",
+     "cost": 60000,
+     "notes": "bỏ hàng",
+     "type": 1,
+     "total": 25000,
+     "products": "[{\"productId\":\"64f290e6e30792fe4c98946d\",\"quantity\":10}]"
+}

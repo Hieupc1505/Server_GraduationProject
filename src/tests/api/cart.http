@@ -1,0 +1,48 @@
+
+
+@baseUrl = http://localhost:8080
+@cartRoute = /api/v1/cart
+
+###
+POST {{baseUrl}}{{cartRoute}}/add
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NGU5YjA5ZDJiMGMzMGE1ODEwNGU1ODEiLCJpYXQiOjE2OTM3MjgyMTAsImV4cCI6MTY5NDYyODIxMH0.vmh_rpIPrXhJb3rVVCLYqi2DvsLFcBGBzEOtyPp3dTY
+Accept-Language: vn
+
+{
+    "productId": "64f290e7e30792fe4c98948d",
+    "price": 220000,
+    "quantity": 3,
+    "selected": "0,1"
+}
+
+
+###
+GET {{baseUrl}}{{cartRoute}}/all
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NGU5YjA5ZDJiMGMzMGE1ODEwNGU1ODEiLCJpYXQiOjE3MDExNTY2MDMsImV4cCI6MTcwMjA1NjYwM30.kWI6nXxRcl1gIwB14gpEdWU1V48VVpaI_lssQ2u34l0
+Accept-Language: en
+
+
+###
+POST {{baseUrl}}{{cartRoute}}/delete
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NGU5YjA5ZDJiMGMzMGE1ODEwNGU1ODEiLCJpYXQiOjE2OTM3ODY3MTcsImV4cCI6MTY5NDY4NjcxN30.tcq1gyypJnuVVZbuNuU8DK96IQ71i7Zhp0lHpZtRS5Y
+Accept-Language: vn
+
+{
+    "k" : "[\"64f290e6e30792fe4c98946d\"]"
+}
+
+###
+POST {{baseUrl}}{{cartRoute}}/update
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NGU5YjA5ZDJiMGMzMGE1ODEwNGU1ODEiLCJpYXQiOjE2OTM3MjgyMTAsImV4cCI6MTY5NDYyODIxMH0.vmh_rpIPrXhJb3rVVCLYqi2DvsLFcBGBzEOtyPp3dTY
+Accept-Language: vn
+
+{
+    "productId": "64f290e6e30792fe4c98946d",
+    "price": 220000,
+    "quantity": 3,
+    "selected": "1,2"
+}

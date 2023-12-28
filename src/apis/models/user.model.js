@@ -1,16 +1,11 @@
 const mongoose = require('mongoose')
 const bcrypt = require('bcryptjs')
 const validator = require('validator')
-
+const randomStr = require('../../utils/randomString')
 const { toJSON, paginate } = require('./plugins')
 
 const userSchema = mongoose.Schema(
     {
-        displayName: {
-            type: String,
-            required: true,
-            trim: true,
-        },
         email: {
             type: String,
             required: true,
@@ -25,25 +20,84 @@ const userSchema = mongoose.Schema(
         },
         password: {
             type: String,
-            required: true,
-            trim: true,
-            minlength: 6,
-            validate(value) {
-                if (!value.match(/\d/) || !value.match(/[a-zA-Z]/)) {
-                    throw new Error('Password must contain at least one letter and one number')
-                }
+            required: function () {
+                return this.provider === 'lc' // Mật khẩu không được yêu cầu nếu có trường provider
             },
+            // minlength: function () {
+            //     return this.provider !== 'lc' ? 0 : 6 // Yêu cầu độ dài ít nhất là 6 kí tự nếu không có provider
+            // },
+            // validate(value) {
+            //     if (this.provider === 'lc' && (!value.match(/\d/) || !value.match(/[a-zA-Z]/))) {
+            //         throw new Error('Password must contain at least one letter and one number')
+            //     }
+            // },
             private: true,
         },
         isEmailVerified: {
             type: Boolean,
             default: false,
         },
+        isDeleted: {
+            type: Boolean,
+            default: false,
+        },
+        provider: {
+            type: String,
+            enum: ['lc', 'gg', 'fb'],
+            default: 'lc',
+        },
+        userInfo: {
+            displayName: {
+                type: String,
+                default: randomStr(6),
+            },
+            number: {
+                type: Number,
+                minLength: 10,
+                maxLength: 10,
+            },
+            address: {
+                type: String,
+                default: '',
+            },
+            avatar: {
+                type: String,
+                default: 'https://res.cloudinary.com/develope-app/image/upload/v1626161751/images_j0qqj4.png',
+            },
+            role: {
+                type: Number,
+                enum: [0, 1, -1],
+                default: 0,
+            },
+        },
+        liked: {
+            type: [String],
+            default: [],
+        },
     },
     {
         timestamps: true,
     }
 )
+
+const otpSchema = mongoose.Schema({
+    number: {
+        type: Number,
+        required: true,
+    },
+    otp: {
+        type: Number,
+        required: true,
+        length: 6,
+    },
+    time: {
+        type: Date,
+        default: Date.now,
+        index: {
+            expires: 60,
+        },
+    },
+})
 
 userSchema.plugin(toJSON)
 userSchema.plugin(paginate)
@@ -80,6 +134,9 @@ userSchema.pre('save', async function (next) {
 /**
  * @typedef User
  */
-const User = mongoose.model('User', userSchema)
-
-module.exports = User
+const User = mongoose.model('users', userSchema)
+const OTP = mongoose.model('otps', otpSchema)
+module.exports = {
+    _User: User,
+    _Otp: OTP,
+}

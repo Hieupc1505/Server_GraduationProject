@@ -7,9 +7,18 @@ const validate = require('../../../middlewares/validate')
 
 const router = express.Router()
 
-router.post('/login', validate(authValidation.loginSchema), authController.login)
-router.post('/logout', validate(authValidation.logoutSchema), authController.logout)
-router.post('/register', validate(authValidation.registerSchema), authController.register)
+router.post('/login', authController.login)
+router.get('/logout', authController.logout)
+router.post('/register', authController.register)
+router.get('/info', authController.getUserInfo)
+
+//hanle get/add/delet liked products
+router.get('/liked', authController.getLikedProducts)
+router.post('/liked/add', authController.addLikedProduct)
+router.post('/liked/delete', authController.deleteLiked)
+
+router.get('/activate/:token', authController.verifyEmail)
+router.post('/user/update', authController.updateUserInfo)
 
 module.exports = router
 

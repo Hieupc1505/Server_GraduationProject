@@ -1,0 +1,33 @@
+
+
+@baseUrl = http://localhost:8080
+@prodRoute = /api/v1/product
+
+###
+GET {{baseUrl}}{{prodRoute}}/init
+###
+GET {{baseUrl}}{{prodRoute}}/like
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NGU5YjA5ZDJiMGMzMGE1ODEwNGU1ODEiLCJpYXQiOjE3MDM2ODk1NTUsImV4cCI6MTcwNDU4OTU1NX0.kk3d9J_RMfjJHbZMoNEYT9q9-qHwjYwqhWhIgI2mn3s
+
+###
+GET {{baseUrl}}{{prodRoute}}/64f290e6e30792fe4c98944d
+Accept-Language: en
+
+###
+GET {{baseUrl}}{{prodRoute}}/search?key=ao
+Accept-Language: vn
+
+###
+GET {{baseUrl}}{{prodRoute}}/list/selled
+Accept-Language: vn
+###
+GET {{baseUrl}}{{prodRoute}}/list/latest
+Accept-Language: vn
+
+###
+POST {{baseUrl}}{{prodRoute}}/full
+Content-Type: application/json
+
+{
+    "productId": "6589a407e895ec13d5be02b9"
+}

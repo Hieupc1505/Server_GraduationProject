@@ -1,2 +1,7 @@
 module.exports.authController = require('./auth.controller')
 module.exports.taskController = require('./task.controller')
+module.exports.ggauthCtrl = require('./gg.auth.ctrl')
+module.exports.productCtrl = require('./product.controller')
+module.exports.cartCtrl = require('./cart.controller')
+module.exports.orderCtrl = require('./order.controller')
+module.exports.adminController = require('./admin.controller')

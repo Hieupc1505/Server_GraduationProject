@@ -5,7 +5,7 @@ const ApiError = require('../utils/api-error')
 const pickKeys = require('../utils/pick-keys')
 
 module.exports = (schema) => (req, res, next) => {
-    const validSchema = pickKeys(schema, ['params', 'query', 'body'])
+    const validSchema = pickKeys(schema, ['params', 'query', 'body', 'cookies', 'userId', 'headers'])
     const object = pickKeys(req, Object.keys(validSchema))
     const { value, error } = Joi.compile(validSchema)
         .prefs({ errors: { label: 'key' }, abortEarly: false })

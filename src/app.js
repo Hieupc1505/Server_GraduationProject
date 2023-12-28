@@ -28,6 +28,9 @@ async function initApp() {
     // Database
     await mongooseLoader()
 
+    //redis
+    require('./loaders/redisLoader')
+
     // express
     const app = expressLoader()
 

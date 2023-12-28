@@ -43,15 +43,47 @@ const env = {
         password: getOsEnv('MONITOR_PASSWORD'),
     },
     passport: {
-        jwtToken: getOsEnv('PASSPORT_JWT'),
-        jwtAccessExpired: toNumber(getOsEnv('PASSPORT_JWT_ACCESS_EXPIRED')),
-        jwtRefreshExpired: toNumber(getOsEnv('PASSPORT_JWT_REFRESH_EXPIRED')),
+        jwtToken: getOsEnv('SECRET_JWT_ACCESS'),
+        jwtAccessExpired: toNumber(getOsEnv('JWT_ACCESS_EXPIRED')),
+        jwtRefreshExpired: toNumber(getOsEnv('JWT_REFRESH_EXPIRED')),
+        clientId: getOsEnv('GG_CLIENT_ID'),
+        clientSecret: getOsEnv('GG_CLIENT_SECRET'),
+        redirectUrl: getOsEnv('GG_REDIRECT_URI'),
+        refreshTokenMail: getOsEnv('REFRESHTOKEN_MAIL'),
+        mailFrom: getOsEnv('MAIL_FROM'),
     },
     swagger: {
         enabled: toBool(getOsEnv('SWAGGER_ENABLED')),
         route: getOsEnv('SWAGGER_ROUTE'),
         username: getOsEnv('SWAGGER_USERNAME'),
         password: getOsEnv('SWAGGER_PASSWORD'),
+    },
+    client: {
+        url: getOsEnv('CLIENT_URL'),
+        redirect_gg_verify: getOsEnv('CLIENT_REDIRECT_GG_LOGIN'),
+    },
+    server: {
+        url: getOsEnv('SERVER_URL'),
+    },
+    jwt: {
+        secretAccessToken: getOsEnv('SECRET_JWT_ACCESS'),
+        secretRefreshToken: getOsEnv('SECRET_JWT_REFRESH'),
+        accessTokenExpired: toNumber(getOsEnv('JWT_ACCESS_EXPIRED')),
+        refreshTokenExpired: toNumber(getOsEnv('JWT_REFRESH_EXPIRED')),
+    },
+    utils: {
+        exchangeRate: getOsEnv('EXCHANGE_RATE'),
+    },
+    vnp: {
+        TmnCode: getOsEnv('vnp_TmnCode'),
+        HashSecret: getOsEnv('vnp_HashSecret'),
+        Url: getOsEnv('vnp_Url'),
+        ReturnUrl: getOsEnv('vnp_ReturnUrl'),
+    },
+    img: {
+        CLOUDINARY_NAME: getOsEnv('CLOUDINARY_NAME'),
+        CLOUDINARY_API_KEY: getOsEnv('CLOUDINARY_API_KEY'),
+        CLOUDINARY_API_SECRET: getOsEnv('CLOUDINARY_API_SECRET'),
     },
 }
 
