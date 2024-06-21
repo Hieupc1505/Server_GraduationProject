@@ -7,6 +7,6 @@ COPY .env ./
 COPY ./src ./src
 RUN npm install
 RUN npm i pm2 -g
-EXPOSE 3000
+EXPOSE 8080
 CMD ["npm", "start"]
 
