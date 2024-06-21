@@ -33,9 +33,12 @@ jobs:
               run: docker pull hieupc05/server-shopdev:latest
             - name: Pull image rediSearch
               run: docker pull redislabs/redisearch
+
             - name: Delete old container
-              run: docker rm -f server-shopdev-api redisearch-shopdev
+              run: docker rm -f server-shopdev-api redisearch-shopdev || true
+
             - name: Run redisearch
-              run: docker run -d -p 6379:6379 --name redisearch-shopdev redislabs/redisearch
+              run: docker run -d -p 6379:6379 --name redisearch-shopdev --network=server-shopdev-network redislabs/redisearch
+
             - name: Run docker container
-              run: docker run -d -p 8080:8080 --name server-shopdev-api hieupc05/server-shopdev
+              run: docker run -d -p 8080:8080 --name server-shopdev-api --network=server-shopdev-network hieupc05/server-shopdev
