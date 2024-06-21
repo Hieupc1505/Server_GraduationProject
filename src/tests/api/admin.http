@@ -21,6 +21,9 @@ Content-Type: application/json
 
 ###
 GET {{baseUrl}}{{adRoute}}/customers
+
+###
+GET {{baseUrl}}{{adRoute}}/dashboard
 ###
 GET {{baseUrl}}{{adRoute}}/categories
 ###

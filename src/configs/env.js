@@ -24,12 +24,13 @@ const env = {
         description: pkg.description,
         host: getOsEnv('APP_HOST'),
         schema: getOsEnv('APP_SCHEMA'),
-        routePrefix: getOsEnv('APP_ROUTE_PREFIX'),
+        routePrefix: getOsEnv('APP_ROUTE_PREFIX'), //api
         port: normalizePort(process.env.PORT || getOsEnv('APP_PORT')),
         banner: toBool(getOsEnv('APP_BANNER')),
     },
     database: {
-        connection: getOsEnv('DB_CONNECTION'),
+        prod: getOsEnv('DB_PRODUCTION'),
+        dev: getOsEnv('DB_CONNECTION'),
     },
     log: {
         level: getOsEnv('LOG_LEVEL'),
@@ -84,6 +85,10 @@ const env = {
         CLOUDINARY_NAME: getOsEnv('CLOUDINARY_NAME'),
         CLOUDINARY_API_KEY: getOsEnv('CLOUDINARY_API_KEY'),
         CLOUDINARY_API_SECRET: getOsEnv('CLOUDINARY_API_SECRET'),
+    },
+    redis: {
+        HOST_NAME: getOsEnv('REDIS_CLOUD_HOST_NAME'),
+        PASSWORD: getOsEnv('REDIS_CLOUD_PASSWORD'),
     },
 }
 

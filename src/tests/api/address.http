@@ -1,0 +1,12 @@
+
+@baseUrl = http://localhost:8080
+@adRoute = /api/v1/address
+
+
+###
+GET {{baseUrl}}{{adRoute}}/init/level1
+###
+GET {{baseUrl}}{{adRoute}}/p
+###
+GET {{baseUrl}}{{adRoute}}/2/27/w
+

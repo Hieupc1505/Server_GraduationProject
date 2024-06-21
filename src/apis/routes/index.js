@@ -9,6 +9,7 @@ const cartRoute = require('./v1/cart.route')
 const orderRoute = require('./v1/order.route')
 const adminRoute = require('./v1/admin.route')
 const addressRoute = require('./v1/address.route')
+const firebaseRoute = require('./v1/firebase.route')
 
 const router = express.Router()
 
@@ -48,6 +49,10 @@ const defaultRoutes = [
     {
         path: '/v1/address',
         route: addressRoute,
+    },
+    {
+        path: '/v1/firebase',
+        route: firebaseRoute,
     },
 ]
 

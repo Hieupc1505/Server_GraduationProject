@@ -217,8 +217,10 @@ const updateInfo = async (_id, user, avatar) => {
         { _id },
         {
             $set: {
-                ...user,
-                'userInfo.avatar': avatar,
+                userInfo: {
+                    ...user,
+                    avatar: avatar,
+                },
             },
         },
         { new: true }

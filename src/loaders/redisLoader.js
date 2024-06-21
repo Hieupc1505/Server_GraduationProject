@@ -1,6 +1,6 @@
-const Redis = require('ioredis')
+const redis = require('ioredis')
 const Logger = require('../libs/logger')
-
+const env = require('../configs/env')
 const log = new Logger(__filename)
 
 // const client = new Redis({
@@ -11,7 +11,11 @@ const log = new Logger(__filename)
 let client = null
 
 if (!client) {
-    client = new Redis()
+    const client = redis.createClient({
+        host: 'redisearch-shopdev',
+        port: 6379,
+        legacyMode: true, //nếu true thì dùng được redisSearch, false thì dùng được các tính năng setnx, set,get...
+    })
 
     // client.connect();
 

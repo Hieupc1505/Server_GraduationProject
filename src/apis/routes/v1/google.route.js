@@ -4,7 +4,10 @@ const env = require('../../../configs/env.js')
 
 const { ggauthCtrl } = require('../../controllers')
 
+//api/v1/gg
+
 router.get('/login/success', ggauthCtrl.login)
+router.post('/login/firebase', ggauthCtrl.loginFirebaseGoogle)
 
 router.get('/login/failed', (req, res) => {
     res.status(401).json({

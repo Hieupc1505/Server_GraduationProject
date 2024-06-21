@@ -28,7 +28,7 @@ module.exports = () => {
     app.use(express.json({ limit: '25mb' }))
 
     // parse urlencoded request body
-    app.use(express.urlencoded({ limit: '25mb' }))
+    app.use(express.urlencoded({ extended: true, limit: '25mb' }))
     // app.use(express.urlencoded({ extended: true }))
 
     // sanitize request data
@@ -44,6 +44,7 @@ module.exports = () => {
     app.use(
         session({
             secret: 'session',
+            resave: false,
             saveUninitialized: true,
             cookie: { secure: false, maxAge: 24 * 60 * 60 * 1000 },
         })

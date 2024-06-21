@@ -43,3 +43,8 @@ Accept-Language: vn
      "total": 25000,
      "products": "[{\"productId\":\"64f290e6e30792fe4c98946d\",\"quantity\":10}]"
 }
+
+###
+GET {{baseUrl}}{{orderRoute}}/ordered
+Accept-Language: vn
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NGU5YjA5ZDJiMGMzMGE1ODEwNGU1ODEiLCJpYXQiOjE3MDM2OTEzOTAsImV4cCI6MTcwNDU5MTM5MH0.KeN_dOk2jODZ-SFQirqBP8x-GedD2DQkl3CJhSQnA3U

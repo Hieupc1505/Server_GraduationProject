@@ -1,13 +1,14 @@
 const mongoose = require('mongoose')
 
-const env = require('../configs/env')
 const Logger = require('../libs/logger')
+const env = require('../configs/env')
 
 const log = new Logger(__filename)
 
 module.exports = async () => {
     try {
-        await mongoose.connect(env.database.connection, {
+        const link = env.node === 'developer' ? env.database.dev : env.database.prod
+        await mongoose.connect(link, {
             useNewUrlParser: true,
             useUnifiedTopology: true,
         })

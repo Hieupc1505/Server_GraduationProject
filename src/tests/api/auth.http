@@ -17,7 +17,7 @@ POST {{baseUrl}}{{authRoute}}/register
 Content-Type: application/json
 
 {
-    "email" : "fadewalker444@gmail.com",
+    "email" : "fadewalker4440@gmail.com",
     "password" : "A123456xyZ"
 }
 
@@ -33,7 +33,8 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NGU5YjA5Z
 
 ###
 GET {{baseUrl}}{{authRoute}}/liked
-Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NGU5YjA5ZDJiMGMzMGE1ODEwNGU1ODEiLCJpYXQiOjE3MDI2MjE2NjcsImV4cCI6MTcwMzUyMTY2N30.1m_xFAJhZPCW-3e5DctH0tzTIp2vxNaTAdBGd6DYDm0
+Accept-Language: vn
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NGU5YjA5ZDJiMGMzMGE1ODEwNGU1ODEiLCJpYXQiOjE3MDI2MjE2NjcsImV4cCI6MTcwMzUyMTY2N30.1m_xFAJhZPCW-3e5DctH0tzTIp2vxNaTAdBGd6DYDm0
 
 ###
 POST {{baseUrl}}{{authRoute}}/liked/add
@@ -41,5 +42,13 @@ Content-Type: application/json
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NGU5YjA5ZDJiMGMzMGE1ODEwNGU1ODEiLCJpYXQiOjE3MDI2MjE2NjcsImV4cCI6MTcwMzUyMTY2N30.1m_xFAJhZPCW-3e5DctH0tzTIp2vxNaTAdBGd6DYDm0
 
 {
-    "productId" : "64f290e6e30792fe4c98944d"
+    "productId" : "64f290e6e30792fe4c989455"
+}
+###
+POST {{baseUrl}}{{authRoute}}/liked/delete
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NGU5YjA5ZDJiMGMzMGE1ODEwNGU1ODEiLCJpYXQiOjE3MDI2MjE2NjcsImV4cCI6MTcwMzUyMTY2N30.1m_xFAJhZPCW-3e5DctH0tzTIp2vxNaTAdBGd6DYDm0
+
+{
+    "productId" : "64f290e6e30792fe4c989455"
 }
