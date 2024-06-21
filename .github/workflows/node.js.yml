@@ -36,6 +36,6 @@ jobs:
             - name: Delete old container
               run: docker rm -f server-shopdev-api redisearch-shopdev
             - name: Run redisearch
-              run: docker run -d -p 6379:6379 -name redisearch-shopdev redislabs/redisearch
+              run: docker run -d -p 6379:6379 --name redisearch-shopdev redislabs/redisearch
             - name: Run docker container
-              run: docker run -d -p 8080:8080 -name server-shopdev-api hieupc05/server-shopdev
+              run: docker run -d -p 8080:8080 --name server-shopdev-api hieupc05/server-shopdev
