@@ -14,7 +14,6 @@ var that = (module.exports = {
                 const token = result.credential.accessToken
                 // The signed-in user info.
                 const user = result.user
-                console.log({ token, user })
                 return res.status(200).json({ token, user })
             })
             .catch((error) => {

@@ -102,7 +102,6 @@ const sendVerificationEmail = catchAsync(async (req, res) => {
 const verifyEmail = [
     validate(authValidation.activeSendMail),
     catchAsync(async (req, res) => {
-        console.log('req query', req.query)
         await authService.verifyEmail(req.query.token)
         res.status(status.NO_CONTENT).send()
     }),

@@ -33,7 +33,7 @@ var that = (module.exports = {
     },
     getDistricts: async (req, res) => {
         const { province } = req.params
-        console.log(province)
+        // console.log(province)
         if (!province) throw new createError(400, 'BadRequest')
         const regex = `${province}/`
         const d = await _Address.find({ level: 2, parents: { $regex: new RegExp('^' + regex) } })

@@ -42,7 +42,6 @@ const logout = async (cookies) => {
  *
  */
 const verifyEmail = async (token) => {
-    console.log(token)
     const { sub } = await tokenService.verifyAccessToken(token)
     const verifyFail = await userService.verifyEmailByUserId(sub)
     if (verifyFail) throw new ApiError(httpStatus.BAD_REQUEST, `Email didn't register!!`)

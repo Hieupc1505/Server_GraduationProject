@@ -114,7 +114,6 @@ const verifyAccessToken = (token) => {
     return new Promise((res, rej) => {
         JWT.verify(token, env.jwt.secretAccessToken, (err, payload) => {
             if (err) {
-                console.log(err)
                 if (err.name === 'JosonWebTokenError') return rej(new createError(status.UNAUTHORIZED, 'verify accesstoken'))
                 return rej(new createError(status.INTERNAL_SERVER_ERROR, 'Req is Forbidden'))
             }

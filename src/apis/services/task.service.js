@@ -29,8 +29,6 @@ const updateTask = async (id, taskBody) => {
         task[key] = taskBody[key]
     })
 
-    console.log('taskkkk: ', task)
-
     await task.save()
 
     return task

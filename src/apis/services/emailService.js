@@ -52,7 +52,6 @@ const sendEmail = async (to, subject = 'Van Hieu Shop!', text = 'Register', URL)
 
         return await transport.sendMail(mailOptions)
     } catch (error) {
-        console.log(error)
         throw new ApiError(status.INTERNAL_SERVER_ERROR, 'Internal Server error').orginalError(error)
     }
 }
