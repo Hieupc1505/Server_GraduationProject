@@ -7,12 +7,13 @@ const status = require('http-status')
 
 const env = require('../../configs/env')
 
-const oauth2Client = new OAuth2(env.passport.clientId, env.passport.clientSecret, env.passport.redirectUrl)
-oauth2Client.setCredentials({ refresh_token: env.passport.refreshTokenMail })
-
 const sendEmail = async (to, subject = 'Van Hieu Shop!', text = 'Register', URL) => {
     try {
+        const oauth2Client = new OAuth2(env.passport.clientId, env.passport.clientSecret, env.passport.redirectUrl)
+        oauth2Client.setCredentials({ refresh_token: env.passport.refreshTokenMail })
+
         const accessToken = await oauth2Client.getAccessToken()
+
         const transport = nodemailer.createTransport({
             host: 'smtp.gmail.com',
             port: 465,
@@ -48,9 +49,10 @@ const sendEmail = async (to, subject = 'Van Hieu Shop!', text = 'Register', URL)
             </div>
             `,
         }
-        console.log('send mail')
+
         return await transport.sendMail(mailOptions)
     } catch (error) {
+        console.log(error)
         throw new ApiError(status.INTERNAL_SERVER_ERROR, 'Internal Server error').orginalError(error)
     }
 }

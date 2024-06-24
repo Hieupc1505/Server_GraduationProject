@@ -28,7 +28,7 @@ const registerSchema = {
     }),
 }
 const activeSendMail = {
-    params: Joi.object().keys({
+    query: Joi.object().keys({
         token: Joi.string().required(),
     }),
 }

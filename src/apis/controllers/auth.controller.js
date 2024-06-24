@@ -13,7 +13,7 @@ const createError = require('http-errors')
 const register = [
     validate(authValidation.registerSchema),
     catchAsync(async (req, res) => {
-        const account = await userService.getUserByEmail(req.body.email)
+        const account = await userService.getUserIsActivate(req.body.email)
 
         if (account) {
             throw new createError(400, 'emailAlready')
@@ -23,12 +23,10 @@ const register = [
         if (!user) {
             user = await userService.createUser(req.body)
         }
-
         const tokens = await tokenService.generateAuthTokens(user)
-        const url = `${env.server.url}/api/v1/auth/activate/${tokens.access}`
-
+        const url = `${env.client.url}/activate?token=${tokens.access}`
         await emailService.sendEmail(user.email, 'Y&M SHOP', 'Register', url)
-        res.status(status.OK).json({
+        res.status(200).json({
             success: true,
             element: {},
             meta: {
@@ -104,7 +102,8 @@ const sendVerificationEmail = catchAsync(async (req, res) => {
 const verifyEmail = [
     validate(authValidation.activeSendMail),
     catchAsync(async (req, res) => {
-        await authService.verifyEmail(req.params.token)
+        console.log('req query', req.query)
+        await authService.verifyEmail(req.query.token)
         res.status(status.NO_CONTENT).send()
     }),
 ]

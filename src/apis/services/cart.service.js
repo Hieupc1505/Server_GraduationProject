@@ -1,9 +1,7 @@
 const status = require('http-status')
 
-const tokenService = require('./token.service')
-const userService = require('./user.service')
 const ApiError = require('../../utils/api-error')
-const { _Order, _Cart, _Product } = require('../models')
+const { _Cart } = require('../models')
 const { handlePrice } = require('../../utils/handlePrice')
 const { filterProductByLang } = require('../../utils/filterProduct')
 const { productService } = require('../services')

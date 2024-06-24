@@ -56,7 +56,7 @@ module.exports = () => {
     // set cors blocked resources
     app.use(
         cors({
-            origin: 'http://localhost:3000',
+            origin: env.client.url,
             methods: 'GET,POST,PUT,DELETE',
             credentials: true,
         })

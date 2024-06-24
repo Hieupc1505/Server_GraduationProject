@@ -17,7 +17,7 @@ router.get('/liked', authController.getLikedProducts)
 router.post('/liked/add', authController.addLikedProduct)
 router.post('/liked/delete', authController.deleteLiked)
 
-router.get('/activate/:token', authController.verifyEmail)
+router.get('/activate', authController.verifyEmail)
 router.post('/user/update', authController.updateUserInfo)
 
 module.exports = router

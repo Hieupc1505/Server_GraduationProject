@@ -3,6 +3,7 @@ const moment = require('moment')
 const status = require('http-status')
 const { Token } = require('../models')
 const ApiError = require('../../utils/api-error')
+const createError = require('http-errors')
 const env = require('../../configs/env')
 const { tokenTypes } = require('../../configs/tokens')
 const client = require('../../loaders/redisLoader')
@@ -71,7 +72,7 @@ const saveRefreshToken = async (userId, token, expiresTime) => {
     return new Promise((res, rej) => {
         client.set(userId.toString(), token, 'EX', expiresTime, (err, reply) => {
             if (err) {
-                return rej(new ApiError(status.INTERNAL_SERVER_ERROR, status[500]).orginalError(err))
+                return rej(new createError(403, 'Request is fobbiden'))
             }
             res(true)
         })
@@ -113,8 +114,9 @@ const verifyAccessToken = (token) => {
     return new Promise((res, rej) => {
         JWT.verify(token, env.jwt.secretAccessToken, (err, payload) => {
             if (err) {
-                if (err.name === 'JosonWebTokenError') return rej(ApiError(status.UNAUTHORIZED, 'verify accesstoken'))
-                return rej(new ApiError(status.INTERNAL_SERVER_ERROR, 'Internal Sever Error').orginalError(error))
+                console.log(err)
+                if (err.name === 'JosonWebTokenError') return rej(new createError(status.UNAUTHORIZED, 'verify accesstoken'))
+                return rej(new createError(status.INTERNAL_SERVER_ERROR, 'Req is Forbidden'))
             }
             res(payload)
         })
@@ -133,9 +135,9 @@ const verifyRefreshToken = async (refreshToken) => {
                 return rej(err)
             }
             client.get(payload.sub, (err, reply) => {
-                if (err) return rej(new ApiError(status.INTERNAL_SERVER_ERROR, 'Internal server error').orginalError(err))
+                if (err) return rej(new createError(status.INTERNAL_SERVER_ERROR, 'Internal server error'))
                 if (refreshToken === reply) return res(payload)
-                return rej(ApiError(status.INTERNAL_SERVER_ERROR, status[500]))
+                return rej(new createError(status.INTERNAL_SERVER_ERROR, status[500]))
             })
             // return res(payload);
         })

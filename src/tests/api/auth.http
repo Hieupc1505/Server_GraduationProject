@@ -21,15 +21,25 @@ Content-Type: application/json
     "password" : "A123456xyZ"
 }
 
+
 ###
-GET {{baseUrl}}{{authRoute}}/activate/eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NGU5YjA5ZDJiMGMzMGE1ODEwNGU1ODEiLCJpYXQiOjE2OTMwMzY3NzUsImV4cCI6MTY5MzkzNjc3NX0.-6i2_4AtZg0J1iCn3FmyIQyDu7sHkX2gTgOK7jsuKBU
+POST {{baseUrl}}{{authRoute}}/register
+Content-Type: application/json
+
+{
+    "email" : "hoanghieuss3344@gmail.com",
+    "password" : "A123456xyZ"
+}
+
+###
+GET {{baseUrl}}{{authRoute}}/activate/eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2Njc5MjI2YmEyZDY1NmE0Yjk3NmY5MjMiLCJpYXQiOjE3MTkyMTUxNjAsImV4cCI6MTcyMDExNTE2MH0.aUVwdg9eLN-UuEzrqaRKKcbCR32F7yH3UAYxUUJ9Tp4
 
 ###
 GET {{baseUrl}}{{authRoute}}/logout
 
 ###
 GET {{baseUrl}}{{authRoute}}/info
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NGU5YjA5ZDJiMGMzMGE1ODEwNGU1ODEiLCJpYXQiOjE2OTMxMDQ2MzEsImV4cCI6MTY5NDAwNDYzMX0.njdKP7peWYxG44SoSyFZ8ZbWClLVqYHDHKVUpVGc0X0
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NGU5YjA5ZDJiMGMzMGE1ODEwNGU1ODEiLCJpYXQiOjE3MTkxODQyMzUsImV4cCI6MTcyMDA4NDIzNX0.cTe2oD78y2aO8ORH12VWjAfM8a1EqULb67vwKObtUrM
 
 ###
 GET {{baseUrl}}{{authRoute}}/liked

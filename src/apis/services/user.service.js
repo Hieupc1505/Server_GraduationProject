@@ -51,6 +51,14 @@ const getUserByEmail = async (email) => {
 const getUserIsNotActivate = async (email) => {
     return _User.findOne({ email, isEmailVerified: false })
 }
+/**
+ *
+ * @param {string} email
+ * @returns {Promise<User>}
+ */
+const getUserIsActivate = async (email) => {
+    return _User.findOne({ email, isEmailVerified: true })
+}
 
 const verifyEmailByUserId = async (userId) => {
     const user = await _User.findOneAndUpdate(
@@ -245,4 +253,5 @@ module.exports = {
     deleteAccount,
     updateInfo,
     addLikeProduct,
+    getUserIsActivate,
 }

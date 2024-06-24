@@ -45,6 +45,7 @@
         "passport": "^0.6.0",
         "passport-google-oauth20": "^2.0.0",
         "passport-jwt": "^4.0.0",
+        "redis": "^4.6.14",
         "serve-favicon": "^2.5.0",
         "swagger-jsdoc": "^6.1.0",
         "swagger-ui-express": "^4.1.6",
@@ -55,6 +56,8 @@
     "devDependencies": {
         "@commitlint/cli": "^17.7.1",
         "@commitlint/config-conventional": "^13.1.0",
+        "@types/cookie-parser": "^1.4.7",
+        "@types/passport": "^1.0.16",
         "@types/uuid": "^9.0.7",
         "eslint": "^7.32.0",
         "eslint-config-prettier": "^8.3.0",
