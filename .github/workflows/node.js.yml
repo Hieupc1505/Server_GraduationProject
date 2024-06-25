@@ -37,6 +37,9 @@ jobs:
             - name: Delete old container
               run: docker rm -f server-shopdev-api redisearch-shopdev || true
 
+            - name: Delete old network
+              run: docker netowrk rm server-shopdev-network || true
+
             - name: Create network
               run: docker network create server-shopdev-network
 
