@@ -6,7 +6,8 @@ const ApiError = require('../../utils/api-error')
 const createError = require('http-errors')
 const env = require('../../configs/env')
 const { tokenTypes } = require('../../configs/tokens')
-const client = require('../../loaders/redisLoader')
+const { getRedis } = require('../../loaders/redisLoader')
+const { instanceConnect: redisClient } = getRedis()
 
 /**
  * Generate auth tokens
@@ -70,7 +71,7 @@ const getTokenByRefresh = async (refreshToken, isBlackListed) => {
  */
 const saveRefreshToken = async (userId, token, expiresTime) => {
     return new Promise((res, rej) => {
-        client.set(userId.toString(), token, 'EX', expiresTime, (err, reply) => {
+        redisClient.set(userId.toString(), token, 'EX', expiresTime, (err, reply) => {
             if (err) {
                 return rej(new createError(403, 'Request is fobbiden'))
             }
@@ -80,7 +81,7 @@ const saveRefreshToken = async (userId, token, expiresTime) => {
 }
 
 const clearRefreshToken = async (userId) => {
-    return await client.del(userId.toString(), (err, reply) => {
+    return await redisClient.del(userId.toString(), (err, reply) => {
         if (err) throw new ApiError(httpStatus.INTERNAL_SERVER_ERROR, 'Internal server error')
         return reply
     })
@@ -133,7 +134,7 @@ const verifyRefreshToken = async (refreshToken) => {
             if (err) {
                 return rej(err)
             }
-            client.get(payload.sub, (err, reply) => {
+            redisClient.get(payload.sub, (err, reply) => {
                 if (err) return rej(new createError(status.INTERNAL_SERVER_ERROR, 'Internal server error'))
                 if (refreshToken === reply) return res(payload)
                 return rej(new createError(status.INTERNAL_SERVER_ERROR, status[500]))

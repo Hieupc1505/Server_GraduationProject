@@ -39,7 +39,9 @@ const login = [
     validate(authValidation.loginSchema),
     catchAsync(async (req, res) => {
         const { email, password } = req.body
+        console.log(email, password)
         const user = await authService.loginUserWithEmailAndPassword(email, password)
+        console.log(user)
         const { access } = await tokenService.generateAuthTokens(user)
 
         res.status(status.OK).json({

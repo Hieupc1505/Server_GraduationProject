@@ -1,5 +1,5 @@
 const httpStatus = require('http-status')
-
+const createError = require('http-errors')
 const tokenService = require('./token.service')
 const userService = require('./user.service')
 const ApiError = require('../../utils/api-error')
@@ -11,11 +11,11 @@ const ApiError = require('../../utils/api-error')
  * @returns {Promise<User>}
  */
 const loginUserWithEmailAndPassword = async (email, password) => {
-    const user = await userService.getUserByEmail(email)
-    if (!user?.isEmailVerified) throw new ApiError(httpStatus.UNAUTHORIZED, 'Email is not activate!!')
-    if (!user || !(await user.isPasswordMatch(password))) {
-        throw new ApiError(httpStatus.UNAUTHORIZED, 'Incorrect email or password')
-    }
+    const user = await userService.getUserIsActivate(email)
+
+    if (!user || !(await user.isPasswordMatch(password)))
+        throw new createError(httpStatus.UNAUTHORIZED, 'Incorrect email or password!')
+
     return user
 }
 

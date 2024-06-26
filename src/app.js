@@ -9,6 +9,7 @@ const passportLoader = require('./loaders/passportLoader')
 const publicLoader = require('./loaders/publicLoader')
 const swaggerLoader = require('./loaders/swaggerLoader')
 const winstonLoader = require('./loaders/winstonLoader')
+const initRedis = require('./loaders/redisLoader')
 
 /**
  * NODEJS API BOILERPLATE
@@ -29,7 +30,7 @@ async function initApp() {
     await mongooseLoader()
 
     //redis
-    require('./loaders/redisLoader')
+    initRedis.initRedis()
 
     // express
     const app = expressLoader()
