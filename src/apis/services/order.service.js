@@ -5,10 +5,11 @@ const userService = require('./user.service')
 const ApiError = require('../../utils/api-error')
 const { _Order } = require('../models/index')
 const { handlePrice } = require('../../utils/handlePrice')
-const client = require('../../loaders/redisLoader')
 const { encodeBase64, decodeBase64ToUTF8 } = require('../../utils/random')
 const { ObjectId } = require('mongodb')
 const { _Inventory } = require('../models/product.model')
+
+const { getRedis } = require('../../loaders/redisLoader')
 
 const pay = {
     vn: ['Thanh toán khi nhận hàng', 'Thanh toán ngân hàng', 'Chuyển khoản QR code'],
@@ -41,6 +42,7 @@ module.exports = {
         return JSON.parse(products)
     },
     bankOrder: async (userId, { address, number, cost, notes, type, total, products, keyCode }, lang = 'vn') => {
+        const redisClient = getRedis()
         const nCost = handlePrice(cost, lang)
         const nTotal = handlePrice(total, lang)
         const tempOrder = {
@@ -63,18 +65,19 @@ module.exports = {
 
         const data = encodeBase64(tempOrder)
 
-        await client.set(keyCode, data, 'EX', 15 * 60)
+        await redisClient.set(keyCode, data, 'EX', 15 * 60)
 
         return true
     },
 
     bankReturn: async ({ vnp_ResponseCode, isVerify }, keyCode) => {
+        const redisClient = getRedis()
         if (!isVerify) throw new ApiError(status.FORBIDDEN, 'Forbidden')
 
-        let isExist = await client.exists(keyCode)
+        let isExist = await redisClient.exists(keyCode)
         if (isExist === 0) throw new ApiError(status.BAD_REQUEST, 'Bad Request')
 
-        const data = decodeBase64ToUTF8(await client.get(keyCode))
+        const data = decodeBase64ToUTF8(await redisClient.get(keyCode))
 
         if (vnp_ResponseCode === '00') {
             data.payment.vnp_Code = vnp_ResponseCode
@@ -84,7 +87,7 @@ module.exports = {
             data.payment.status = -1
         }
 
-        const [result, _] = await Promise.all([_Order.create(data), client.del(keyCode)])
+        const [result, _] = await Promise.all([_Order.create(data), redisClient.del(keyCode)])
         return [data.products, data.userId]
     },
 

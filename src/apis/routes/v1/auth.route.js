@@ -1,12 +1,9 @@
 const express = require('express')
 
 const { authController } = require('../../controllers')
-const { authValidation } = require('../../validations')
-
-const validate = require('../../../middlewares/validate')
 
 const router = express.Router()
-
+router.get('/redis', authController.testRedis)
 router.post('/login', authController.login)
 router.get('/logout', authController.logout)
 router.post('/register', authController.register)

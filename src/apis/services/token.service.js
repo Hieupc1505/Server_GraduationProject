@@ -7,7 +7,8 @@ const createError = require('http-errors')
 const env = require('../../configs/env')
 const { tokenTypes } = require('../../configs/tokens')
 const { getRedis } = require('../../loaders/redisLoader')
-const { instanceConnect: redisClient } = getRedis()
+const { promisify } = require('util')
+// const { instanceConnect: redisClient } = getRedis()
 
 /**
  * Generate auth tokens
@@ -69,20 +70,18 @@ const getTokenByRefresh = async (refreshToken, isBlackListed) => {
  * @param {number} expiresTime //minute
  * @returns {Promise<token>}
  */
+
 const saveRefreshToken = async (userId, token, expiresTime) => {
-    return new Promise((res, rej) => {
-        redisClient.set(userId.toString(), token, 'EX', expiresTime, (err, reply) => {
-            if (err) {
-                return rej(new createError(403, 'Request is fobbiden'))
-            }
-            res(true)
-        })
-    })
+    const redisClient = getRedis()
+    await redisClient.set(userId.toString(), token, 'EX', expiresTime)
+    return true
 }
 
 const clearRefreshToken = async (userId) => {
+    const redisClient = getRedis()
+
     return await redisClient.del(userId.toString(), (err, reply) => {
-        if (err) throw new ApiError(httpStatus.INTERNAL_SERVER_ERROR, 'Internal server error')
+        if (err) throw new ApiError(httpStatus.INTERNAL_SERVER_ERROR, `Internal server error:::${err}`)
         return reply
     })
 }
@@ -111,16 +110,11 @@ const saveToken = async (token, userId, expires, type, blacklisted = false) => {
  * @param {string} token
  * @returns {Promise<tokenInfo>}
  */
-const verifyAccessToken = (token) => {
-    return new Promise((res, rej) => {
-        JWT.verify(token, env.jwt.secretAccessToken, (err, payload) => {
-            if (err) {
-                if (err.name === 'JosonWebTokenError') return rej(new createError(status.UNAUTHORIZED, 'verify accesstoken'))
-                return rej(new createError(status.INTERNAL_SERVER_ERROR, 'Req is Forbidden'))
-            }
-            res(payload)
-        })
-    })
+
+const verifyAccessToken = async (token) => {
+    const verifyAsync = promisify(JWT.verify) // Convert jwt.verify to a promise-based function
+
+    return await verifyAsync(token, env.jwt.secretAccessToken)
 }
 
 /**
@@ -129,19 +123,15 @@ const verifyAccessToken = (token) => {
  * @returns {Promise<payload>}
  */
 const verifyRefreshToken = async (refreshToken) => {
-    return new Promise((res, rej) => {
-        JWT.verify(refreshToken, env.jwt.secretRefreshToken, (err, payload) => {
-            if (err) {
-                return rej(err)
-            }
-            redisClient.get(payload.sub, (err, reply) => {
-                if (err) return rej(new createError(status.INTERNAL_SERVER_ERROR, 'Internal server error'))
-                if (refreshToken === reply) return res(payload)
-                return rej(new createError(status.INTERNAL_SERVER_ERROR, status[500]))
-            })
-            // return res(payload);
-        })
-    })
+    const redisClient = getRedis()
+    const verifyAsync = promisify(JWT.verify)
+
+    const payload = await verifyAsync(refreshToken, env.jwt.secretRefreshToken)
+    if (!payload) return new createError(400, 'Bad request')
+    const result = await redisClient.get(payload.sub)
+    if (result && refreshToken === result) return payload
+
+    return null
 }
 
 module.exports = {

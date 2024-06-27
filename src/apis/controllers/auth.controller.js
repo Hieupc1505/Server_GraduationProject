@@ -9,6 +9,7 @@ const { authValidation } = require('../validations')
 const { getLanguage } = require('../../utils/getLanguage')
 const { uploadSingleImage } = require('../../utils/cloudinary.utils')
 const createError = require('http-errors')
+const { getRedis } = require('../../loaders/redisLoader')
 
 const register = [
     validate(authValidation.registerSchema),
@@ -16,7 +17,7 @@ const register = [
         const account = await userService.getUserIsActivate(req.body.email)
 
         if (account) {
-            throw new createError(400, 'emailAlready')
+            return new createError(400, 'Bad Request')
         }
 
         let user = await userService.getUserIsNotActivate(req.body.email)
@@ -39,9 +40,8 @@ const login = [
     validate(authValidation.loginSchema),
     catchAsync(async (req, res) => {
         const { email, password } = req.body
-        console.log(email, password)
+
         const user = await authService.loginUserWithEmailAndPassword(email, password)
-        console.log(user)
         const { access } = await tokenService.generateAuthTokens(user)
 
         res.status(status.OK).json({
@@ -59,7 +59,7 @@ const logout = [
     catchAsync(async (req, res) => {
         await authService.logout(req?.cookies)
         res.clearCookie('_cookie')
-        res.status(status.NO_CONTENT).json({
+        res.status(200).json({
             success: true,
         })
     }),
@@ -180,7 +180,20 @@ const updateUserInfo = [
     }),
 ]
 
+const testRedis = catchAsync(async (req, res) => {
+    const redisClient = getRedis()
+    const v1 = await redisClient.get('667d978c1c645c5606e25549')
+
+    res.status(200).json({
+        success: true,
+        mess: 'had change',
+        v1,
+        v2: await redisClient.get('667d978c1c645c5606e25549'),
+    })
+})
+
 module.exports = {
+    testRedis,
     register,
     login,
     logout,

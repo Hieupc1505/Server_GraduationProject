@@ -25,15 +25,10 @@ const loginUserWithEmailAndPassword = async (email, password) => {
  * @returns {Promise<boolean>}
  */
 const logout = async (cookies) => {
-    if (!cookies) throw new ApiError(httpStatus.BAD_REQUEST, 'Bad Request')
+    if (!cookies) throw new createError(httpStatus.BAD_REQUEST, 'Bad Request')
     const refreshTokenDoc = await tokenService.verifyRefreshToken(cookies._cookie)
-
-    if (!refreshTokenDoc) {
-        throw new ApiError(httpStatus.NOT_FOUND, 'Not found')
-    }
-
+    if (!refreshTokenDoc) return new createError(httpStatus.BAD_REQUEST, 'Bad request')
     await tokenService.clearRefreshToken(refreshTokenDoc.sub)
-
     return true
 }
 
@@ -54,11 +49,6 @@ const refreshAuth = async (token) => {
 
     return tokens
 }
-
-const addUserLoginByGoogle = async (email) => {
-    if (!(await userService.getUserByEmail(email))) throw new ApiError(httpStatus.UNAUTHORIZED, 'Unauthorized')
-}
-
 module.exports = {
     loginUserWithEmailAndPassword,
     logout,

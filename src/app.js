@@ -25,12 +25,11 @@ const log = new Logger(__filename)
 async function initApp() {
     // logging
     winstonLoader()
+    //redis
+    await initRedis.initRedis()
 
     // Database
     await mongooseLoader()
-
-    //redis
-    initRedis.initRedis()
 
     // express
     const app = expressLoader()

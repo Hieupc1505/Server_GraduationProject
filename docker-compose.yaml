@@ -1,24 +1,22 @@
 version: '3'
 services:
-    rediSearch_v2:
-        image: redislabs/redisearch
-        container_name: redisearch-shopdev
+    redis-img:
+        image: redis/redis-stack-server
+        container_name: redis_shopdev
         ports:
             - '6379:6379'
         networks:
             - server-shopdev-network
 
-    server-api-shopdev:
-        image: server-shopdev
-        ports:
-            - '8080:8080'
+    server-shopdev-be:
         build:
             context: .
+        ports:
+            - '8080:8080'
         container_name: server-shopdev-api
         networks:
             - server-shopdev-network
-        depends_on:
-            - rediSearch_v2
+
 
 networks:
     server-shopdev-network:

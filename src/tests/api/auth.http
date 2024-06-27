@@ -8,28 +8,9 @@ POST {{baseUrl}}{{authRoute}}/login
 Content-Type: application/json
 
 {
-    "email" : "bacphihl12@gmail.com",
-    "password" : "A123456xyZ"
-}
-###
-POST {{baseUrl}}{{authRoute}}/login
-Content-Type: application/json
-
-{
     "email" : "fadewalker4440@gmail.com",
     "password" : "A123456xyZ"
 }
-
-###
-POST {{baseUrl}}{{authRoute}}/register
-Content-Type: application/json
-
-{
-    "email" : "fadewalker4440@gmail.com",
-    "password" : "A123456xyZ"
-}
-
-
 ###
 POST {{baseUrl}}{{authRoute}}/register
 Content-Type: application/json
@@ -40,14 +21,33 @@ Content-Type: application/json
 }
 
 ###
-GET {{baseUrl}}{{authRoute}}/activate?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NjdhYjA5YjE4NzYxMzdjZTU5MmMwZjAiLCJpYXQiOjE3MTkzMTY2MzUsImV4cCI6MTcyMDIxNjYzNX0.tlsvfiwSxTDohjGlGoQmYo8Zb8O5-vqwmsdqhRsR9tQ
+POST {{baseUrl}}{{authRoute}}/register
+Content-Type: application/json
+
+{
+    "email" : "fadewalker4440@gmail.com",
+    "password" : "A123456xyZ"
+}
+
+
+###
+POST {{baseUrl}}{{authRoute}}/register
+Content-Type: application/json
+
+{
+    "email" : "hongntph19500@fpt.edu.vn",
+    "password" : "A123456xyZ"
+}
+
+###
+GET {{baseUrl}}{{authRoute}}/activate?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NjdhYjA5YjE4NzYxMzdjZTU5MmMwZjAiLCJpYXQiOjE3MTk1MDUxODEsImV4cCI6MTcyMDQwNTE4MX0.t-0_WVEOgCfRF4UaBHUo1xWssotd7Jqr8-JVnfXSEuw
 
 ###
 GET {{baseUrl}}{{authRoute}}/logout
 
 ###
 GET {{baseUrl}}{{authRoute}}/info
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NGU5YjA5ZDJiMGMzMGE1ODEwNGU1ODEiLCJpYXQiOjE3MTkxODQyMzUsImV4cCI6MTcyMDA4NDIzNX0.cTe2oD78y2aO8ORH12VWjAfM8a1EqULb67vwKObtUrM
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NjdhYjA5YjE4NzYxMzdjZTU5MmMwZjAiLCJpYXQiOjE3MTk1MDYyNzAsImV4cCI6MTcyMDQwNjI3MH0.jdkM5TmHVjas8T0eDSmFnU4Vy-504Kn4oHRj1-enf08
 
 ###
 GET {{baseUrl}}{{authRoute}}/liked
@@ -72,6 +72,7 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NGU5YjA5Z
 }
 
 
+13.215.179.135
 ###
 POST http://13.215.179.135:8080/api/v1/auth/login
 Content-Type: application/json
@@ -80,4 +81,6 @@ Content-Type: application/json
     "email" : "fadewalker4440@gmail.com",
     "password" : "A123456xyZ"
 }
+###
+GET {{baseUrl}}{{authRoute}}/redis
 

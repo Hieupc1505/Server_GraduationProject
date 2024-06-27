@@ -1,4 +1,3 @@
-const { connection } = require('mongoose')
 const redis = require('redis')
 const createError = require('http-errors')
 const Logger = require('../libs/logger')
@@ -8,12 +7,10 @@ const env = require('../configs/env')
 const redisConnect = {
     production: {
         url: `redis://${env.redis.HOST_NAME}:6379`,
-        legacyMode: true,
     },
     development: {
         host: env.redis.HOST_NAME,
         port: 6379,
-        legacyMode: true,
     },
 }
 
@@ -61,16 +58,15 @@ const handleEventConnection = ({ connectionRedis }) => {
     })
 }
 
-const initRedis = () => {
+const initRedis = async () => {
     const instanceRedis = redis.createClient(redisConnect[env.node])
     client.instanceConnect = instanceRedis
-
     handleEventConnection({
         connectionRedis: instanceRedis,
     })
 }
 
-const getRedis = () => client
+const getRedis = () => client.instanceConnect
 
 const closeRedis = () => {}
 
