@@ -50,8 +50,9 @@ const handleEventConnection = ({ connectionRedis }) => {
 
 const initRedis = () => {
     const instanceRedis = redis.createClient({
-        host: env.redis.HOST_NAME,
-        port: 6379,
+        // host: env.redis.HOST_NAME,
+        // port: 6379,
+        url: `redis://${env.redis.HOST_NAME}:6379`,
         legacyMode: true,
     })
     client.instanceConnect = instanceRedis

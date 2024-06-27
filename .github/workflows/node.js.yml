@@ -1,7 +1,9 @@
+
 # This workflow will do a clean installation of node dependencies, cache/restore them, build the source code and run tests across different versions of node
+
 # For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-nodejs
 
-name: Node.js CI
+name: Node.js CI server-shopdev
 
 on:
     push:
@@ -11,20 +13,40 @@ jobs:
     build:
         runs-on: self-hosted
 
-        strategy:
-            matrix:
-                node-version: [20.x]
-                # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
-
         steps:
-            - uses: actions/checkout@v4
-            - name: Use Node.js ${{ matrix.node-version }}
-              uses: actions/setup-node@v3
-              with:
-                  node-version: ${{ matrix.node-version }}
-                  cache: 'npm'
-            - run: npm ci
-            - run: |
-                  touch .env
-                  echo "${{secrets.ENV_FILE}}" > .env
-            - run: pm2 restart shopdev-backend
+            - name: Checkout Source
+              uses: actions/checkout@v4
+            - name: Create .env file
+              run: echo "${{ secrets.ENV_FILE }}" >> .env
+
+            - name: Login to docker hub
+              run: docker login -u ${{secrets.DOCKER_USERNAME}} -p ${{secrets.DOCKER_PASSWORD}}
+
+            - name: Build docker image
+              run: docker build -t hieupc05/server-shopdev .
+            - name: Publish image to docker hub
+              run: docker push hieupc05/server-shopdev:latest
+
+    deploy:
+        needs: build
+        runs-on: self-hosted
+        steps:
+            - name: Pull image from docker hub
+              run: docker pull hieupc05/server-shopdev:latest
+            - name: Pull image rediSearch
+              run: docker pull redis/redis-stack-server
+
+            - name: Delete old container
+              run: docker rm -f server-shopdev-api redis_shopdev || true
+
+            - name: Delete old network
+              run: docker network rm server-shopdev-network || true
+
+            - name: Create network
+              run: docker network create server-shopdev-network
+
+            - name: Run redisearch
+              run: docker run -d -p 6379:6379 --name redis_shopdev --network=server-shopdev-network redis/redis-stack-server
+
+            - name: Run docker container
+              run: docker run -d -p 8080:8080 --name server-shopdev-api --network=server-shopdev-network hieupc05/server-shopdev
